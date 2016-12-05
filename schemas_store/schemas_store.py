@@ -11,19 +11,25 @@ INDEX_RE = compile(r'/(?P<index>\d+)$')
 class SchemaStore(object):
     """  Object that work with schemas """
 
-    tree = None
+    root = None
 
     def __init__(self):
         """ Init path and update schema(IO operation) """
         self.path = os.getcwd()
-        self.update_schema(self.path + '/schemas_store/schemas')
+        self.update_schemas_id(self.path + '/schemas_store/schemas')
 
     def load(self):
-        self.tree = Tree()
-        self.build_tree(self.tree, self.path + '/schemas_store/schemas')
+        """ Create root """
+        self.root = Tree()
+        self.build_tree(self.root, self.path + '/schemas_store/schemas')
+        self.root = self.root.children[0]  # first branch is root now
 
     def build_tree(self, tree, path):
-        """ Build Tree on schemas """
+        """
+        Build tree from schemas
+        :param tree: _tree.Tree
+        :param path: os.path
+        """
         # import pdb; pdb.set_trace()
         for elem_name in os.listdir(path):
             if elem_name.endswith('.json'):
@@ -55,12 +61,18 @@ class SchemaStore(object):
                                  self.update_file,
                                  self._go_by_schema)
 
-    def update_schema(self, path):
-        """ Iter schemas and update id """
+    def update_schemas_id(self, path):
+        """
+        Update every schemas id
+        :param path: os.path
+        """
         self._go_by_schema(path, self.update_file, self._go_by_schema)
 
     def update_file(self, file_path):
-        """ Update id and rewrite file """
+        """
+        Update schema id
+        :param file_path: os.path
+        """
         with open(file_path, 'r+') as f:
             schema_json = json.load(f)
             schema_json['id'] = "file://{package}/schemas_store/schemas{schema}".format(
