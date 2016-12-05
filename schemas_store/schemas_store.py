@@ -2,7 +2,11 @@
 import os
 import json
 from re import compile
+
+from jsonschema import Draft4Validator
+
 from ._tree import Tree
+
 
 VERSION_RE = compile(r'schema_(?P<version>\d+).json')
 INDEX_RE = compile(r'/(?P<index>\d+)$')
@@ -22,7 +26,15 @@ class SchemaStore(object):
         """ Create root """
         self.root = Tree()
         self.build_tree(self.root, self.path + '/schemas_store/schemas')
-        self.root = self.root.children[0]  # first branch is root now
+
+    def find(self, code, version='latest'):
+        """
+        Get schema by code
+        :param code: str
+        :param version: str example "001"
+        :return: schema or None
+        """
+        pass
 
     def build_tree(self, tree, path):
         """
@@ -36,7 +48,7 @@ class SchemaStore(object):
                 with open(os.path.join(path, elem_name)) as f:
                     schema_json = json.load(f)
                     reg_group = VERSION_RE.search(elem_name).groupdict()
-                    tree.versions[reg_group['version']] = schema_json
+                    tree.versions[reg_group['version']] = Draft4Validator(schema_json)
             else:
                 if os.path.isdir(os.path.join(path, elem_name)):
                     child = Tree(index=elem_name)
