@@ -9,11 +9,7 @@ Tests for `schemas_store` module.
 """
 
 
-import sys
 import unittest
-
-from schemas_store import schemas_store
-
 
 
 class TestSchemas_store(unittest.TestCase):

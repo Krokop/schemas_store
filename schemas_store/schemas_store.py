@@ -2,11 +2,11 @@
 import os
 import json
 from re import compile
-
+from collections import namedtuple
 from jsonschema import Draft4Validator
 
 from ._tree import Tree
-
+from .exceptions import NotFoundSchema
 
 VERSION_RE = compile(r'schema_(?P<version>\d+).json')
 INDEX_RE = compile(r'/(?P<index>\d+)$')
@@ -15,7 +15,9 @@ INDEX_RE = compile(r'/(?P<index>\d+)$')
 class SchemaStore(object):
     """  Object that work with schemas """
 
+    schema_tuple = namedtuple('schema', ['code', 'version', 'schema'])
     root = None
+    error_massage_cannot_find = "Can't find schema by version {version}"
 
     def __init__(self):
         """ Init path and update schema(IO operation) """
@@ -27,14 +29,103 @@ class SchemaStore(object):
         self.root = Tree()
         self.build_tree(self.root, self.path + '/schemas_store/schemas')
 
-    def find(self, code, version='latest'):
+    def _check_version_in_branch(self, version, branch):
+        """ Check that version in branch if it not then raise exception """
+        if version in branch.versions:  # Try find version
+            return self.schema_res(
+                code=branch.index,
+                version=version,
+                schema=branch.versions[version])
+        else:
+            raise NotFoundSchema(
+                self.error_massage_cannot_find.format(version=version)
+            )
+
+    def get_schema(self, code, version='latest'):
         """
-        Get schema by code
+        Get schema by code,
         :param code: str
         :param version: str example "001"
-        :return: schema or None
+        :return: namedtuple with code, version, schema
         """
-        pass
+
+        return self._find_child(code=code, version=version, branch=self.root)
+
+    def _find_child(self, branch, code, version):
+        """
+        Try find child by code and version
+        :param branch: Tree
+        :param code: CAV code
+        :param version: string
+        :return:
+        """
+        for child in branch.children:
+            if branch.index:
+                check_code = code[len(branch.index):]
+            else:
+                check_code = code
+            if check_code.startswith(child.index):
+                result = self._get_schema(
+                    code=code[len(branch.index):] if branch.index else code,
+                    version=version,
+                    branch=child)
+                if not result:
+                    if version != 'latest':
+                        raise NotFoundSchema(
+                            self.error_massage_cannot_find.format(
+                                version=version)
+                        )
+                    else:
+                        return self._check_version_in_branch(version, branch)
+                else:
+                    return result
+            else:
+                raise NotFoundSchema(
+                    self.error_massage_cannot_find.format(version=version)
+                )
+
+    def _get_schema(self, code, branch, version='latest',):
+        """
+        Need normal doc string
+        :param code: CAV code
+        :param version: string length which is 3
+        :param branch: Tree
+        :return:
+        """
+        if len(code) == len(branch.index):  # If it last step
+            if version == 'latest':
+                if branch.versions:
+                    version_keys = list(branch.versions.keys())
+                    return self.schema_tuple(
+                        code=branch.index,
+                        version=version_keys[-1],
+                        schema=branch.versions[version_keys[-1]])
+                else:
+                    return None  # Get up latest version
+            else:
+                return self._check_version_in_branch(version, branch)
+        else:
+            result = self._find_child(branch=branch,
+                                      code=code,
+                                      version=version)
+            if result:
+                if branch.index:
+                    return self.schema_tuple(
+                        code=branch.index + result[0],
+                        version=result.version,
+                        schema=result.schema)
+                else:
+                    return result
+            if version != 'latest':
+                raise NotFoundSchema(
+                    self.error_massage_cannot_find.format(version=version)
+                )
+            else:
+                version_keys = list(branch.versions.keys())
+                return self.schema_tuple(
+                    code=branch.index,
+                    version=version_keys[-1],
+                    schema=branch.versions[version_keys[-1]])
 
     def build_tree(self, tree, path):
         """
@@ -48,7 +139,9 @@ class SchemaStore(object):
                 with open(os.path.join(path, elem_name)) as f:
                     schema_json = json.load(f)
                     reg_group = VERSION_RE.search(elem_name).groupdict()
-                    tree.versions[reg_group['version']] = Draft4Validator(schema_json)
+                    tree.versions[reg_group['version']] = Draft4Validator(
+                        schema_json
+                    )
             else:
                 if os.path.isdir(os.path.join(path, elem_name)):
                     child = Tree(index=elem_name)
@@ -68,8 +161,9 @@ class SchemaStore(object):
             if elem_name.endswith('.json'):
                 handler_file(os.path.join(path, elem_name))
             else:
-                if os.path.isdir(path+'/'+elem_name):
-                    handler_path(path+'/'+elem_name,
+                new_path = os.path.join(path, elem_name)
+                if os.path.isdir(new_path):
+                    handler_path(new_path,
                                  self.update_file,
                                  self._go_by_schema)
 
@@ -85,9 +179,10 @@ class SchemaStore(object):
         Update schema id
         :param file_path: os.path
         """
+        file_path_template = "file://{package}/schemas_store/schemas{schema}"
         with open(file_path, 'r+') as f:
             schema_json = json.load(f)
-            schema_json['id'] = "file://{package}/schemas_store/schemas{schema}".format(
+            schema_json['id'] = file_path_template.format(
                 package=self.path,
                 schema=schema_json['id'].split('schemas')[-1])
             f.seek(0)

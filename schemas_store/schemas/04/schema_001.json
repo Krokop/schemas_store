@@ -1,18 +1,18 @@
 {
-    "id": "file:///Users/serbokryl/work/schemas_store/schemas_store/schemas/04/schema_001.json",
-    "additionalProperties": false,
-    "type": "object",
-    "required": [
-        "total_area"
-    ],
     "$schema": "http://json-schema.org/draft-04/schema#",
     "title": "Schema for all buildings",
+    "additionalProperties": false,
+    "type": "object",
+    "id": "file:///Users/serbokryl/work/schemas_store/schemas_store/schemas/04/schema_001.json",
     "properties": {
         "total_area": {
-            "minimum": 0,
-            "description": "загальна площа яку займає будівля",
             "title": "Загальна площа",
-            "type": "integer"
+            "description": "загальна площа яку займає будівля",
+            "type": "integer",
+            "minimum": 0
         }
-    }
+    },
+    "required": [
+        "total_area"
+    ]
 }
