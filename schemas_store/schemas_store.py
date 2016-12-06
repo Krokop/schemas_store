@@ -32,7 +32,7 @@ class SchemaStore(object):
     def _check_version_in_branch(self, version, branch):
         """ Check that version in branch if it not then raise exception """
         if version in branch.versions:  # Try find version
-            return self.schema_res(
+            return self.schema_tuple(
                 code=branch.index,
                 version=version,
                 schema=branch.versions[version])
