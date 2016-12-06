@@ -28,7 +28,7 @@ class SchemaStore(object):
         """ Create root """
         self.root = Tree()
         self.build_tree(self.root, self.path)
-        return self.root
+        return self
 
     def _check_version_in_branch(self, version, branch):
         """ Check that version in branch if it not then raise exception """
