@@ -6,8 +6,8 @@ schemas_store
 .. image:: https://img.shields.io/pypi/v/schemas_store.svg
         :target: https://pypi.python.org/pypi/schemas_store
 
-.. image:: https://img.shields.io/travis/Krokop/schemas_store.svg
-        :target: https://travis-ci.org/Krokop/schemas_store
+.. image:: https://travis-ci.com/Krokop/schemas_store.svg?token=RpJaj9QPKZLqG7vycyYV&branch=master
+    :target: https://travis-ci.com/Krokop/schemas_store
 
 .. image:: https://readthedocs.org/projects/schemas-store/badge/?version=latest
         :target: https://schemas-store.readthedocs.io/en/latest/?badge=latest
@@ -18,7 +18,7 @@ schemas_store
      :alt: Updates
 
 
-Store schemas 
+Store schemas
 
 
 * Free software: Apache Software License 2.0
