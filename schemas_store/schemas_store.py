@@ -19,15 +19,15 @@ class SchemaStore(object):
     root = None
     error_massage_cannot_find = "Can't find schema by version {version}"
 
-    def __init__(self):
+    def __init__(self, path):
         """ Init path and update schema(IO operation) """
-        self.path = os.getcwd()
-        self.update_schemas_id(self.path + '/schemas_store/schemas')
+        self.path = path
+        self.update_schemas_id(self.path)
 
     def load(self):
         """ Create root """
         self.root = Tree()
-        self.build_tree(self.root, self.path + '/schemas_store/schemas')
+        self.build_tree(self.root, self.path)
 
     def _check_version_in_branch(self, version, branch):
         """ Check that version in branch if it not then raise exception """
@@ -179,7 +179,7 @@ class SchemaStore(object):
         Update schema id
         :param file_path: os.path
         """
-        file_path_template = "file://{package}/schemas_store/schemas{schema}"
+        file_path_template = "file://{package}/{schema}"
         with open(file_path, 'r+') as f:
             schema_json = json.load(f)
             schema_json['id'] = file_path_template.format(
