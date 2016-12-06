@@ -10,8 +10,8 @@ schemas_store
     :target: https://travis-ci.com/Krokop/schemas_store
 
 .. image:: https://readthedocs.org/projects/schemas-store/badge/?version=latest
-        :target: https://schemas-store.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
+    :target: http://schemas-store.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
 
 .. image:: https://pyup.io/repos/github/Krokop/schemas_store/shield.svg
      :target: https://pyup.io/repos/github/Krokop/schemas_store/
