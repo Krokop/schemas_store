@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import io
 import json
 from re import compile
 from collections import namedtuple
@@ -181,7 +182,7 @@ class SchemaStore(object):
         :param file_path: os.path
         """
         file_path_template = "file://{package}/{schema}"
-        with open(file_path, 'rt+') as f:
+        with io.open(file_path, mode='r+') as f:
             schema_json = json.load(f)
             schema_json['id'] = file_path_template.format(
                 package=self.path,
