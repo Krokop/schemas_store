@@ -1,22 +1,20 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "additionalProperties": false,
-    "type": "object",
     "id": "file:///Users/serbokryl/work/schemas_store/schemas_store/schemas/04/1/2/2/schema_001.json",
+    "$schema": "http://json-schema.org/draft-04/schema#",
     "properties": {
+        "total_area": {
+            "$ref": "../schema_001.json#/properties/total_area"
+        },
         "number_of_kitchen": {
             "$ref": "../schema_001.json#/properties/number_of_kitchen"
         },
         "living_space": {
             "title": "Житлова площа",
-            "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "type": "integer"
         },
         "number_of_rooms": {
             "$ref": "../schema_001.json#/properties/number_of_rooms"
-        },
-        "total_area": {
-            "$ref": "../schema_001.json#/properties/total_area"
         }
     },
     "required": [
@@ -24,5 +22,7 @@
         "total_area",
         "number_of_rooms",
         "living_space"
-    ]
+    ],
+    "additionalProperties": false,
+    "type": "object"
 }

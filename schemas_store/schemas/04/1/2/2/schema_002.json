@@ -1,22 +1,20 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "additionalProperties": false,
-    "type": "object",
     "id": "file:///Users/serbokryl/work/schemas_store/schemas_store/schemas/04/1/2/2/schema_002.json",
+    "$schema": "http://json-schema.org/draft-04/schema#",
     "properties": {
         "number_of_kitchen": {
             "$ref": "../schema_001.json#/properties/number_of_kitchen"
         },
         "number_of_doors": {
             "title": "Кількість дверей",
-            "type": "integer",
-            "minimum": 0
-        },
-        "number_of_rooms": {
-            "$ref": "../schema_001.json#/properties/number_of_rooms"
+            "minimum": 0,
+            "type": "integer"
         },
         "total_area": {
             "$ref": "../schema_001.json#/properties/total_area"
+        },
+        "number_of_rooms": {
+            "$ref": "../schema_001.json#/properties/number_of_rooms"
         }
     },
     "required": [
@@ -24,5 +22,7 @@
         "total_area",
         "number_of_rooms",
         "number_of_doors"
-    ]
+    ],
+    "additionalProperties": false,
+    "type": "object"
 }

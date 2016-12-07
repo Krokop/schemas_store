@@ -1,25 +1,25 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "additionalProperties": false,
-    "type": "object",
     "id": "file:///Users/serbokryl/work/schemas_store/schemas_store/schemas/04/1/2/schema_001.json",
+    "$schema": "http://json-schema.org/draft-04/schema#",
     "properties": {
         "number_of_kitchen": {
-            "title": "Кількість кухонь",
             "description": "Загальна кількість кухонь",
-            "type": "integer",
-            "minimum": 0
-        },
-        "number_of_rooms": {
-            "$ref": "../schema_001.json#/properties/number_of_rooms"
+            "title": "Кількість кухонь",
+            "minimum": 0,
+            "type": "integer"
         },
         "total_area": {
             "$ref": "../schema_001.json#/properties/total_area"
+        },
+        "number_of_rooms": {
+            "$ref": "../schema_001.json#/properties/number_of_rooms"
         }
     },
     "required": [
         "number_of_rooms",
         "total_area",
         "number_of_kitchen"
-    ]
+    ],
+    "additionalProperties": false,
+    "type": "object"
 }

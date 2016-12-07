@@ -1,21 +1,21 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "additionalProperties": false,
-    "type": "object",
     "id": "file:///Users/serbokryl/work/schemas_store/schemas_store/schemas/04/1/schema.json",
+    "$schema": "http://json-schema.org/draft-04/schema#",
     "properties": {
-        "number_of_rooms": {
-            "title": "Кількість кімнат",
-            "description": "Загальна кількість кімнат",
-            "type": "integer",
-            "minimum": 0
-        },
         "total_area": {
             "$ref": "../schema_001.json#/properties/total_area"
+        },
+        "number_of_rooms": {
+            "description": "Загальна кількість кімнат",
+            "title": "Кількість кімнат",
+            "minimum": 0,
+            "type": "integer"
         }
     },
     "required": [
         "number_of_rooms",
         "total_area"
-    ]
+    ],
+    "additionalProperties": false,
+    "type": "object"
 }
