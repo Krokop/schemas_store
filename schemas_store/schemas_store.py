@@ -182,7 +182,7 @@ class SchemaStore(object):
         :param file_path: os.path
         """
         file_path_template = "file://{package}/{schema}"
-        with io.open(file_path, mode='r+') as f:
+        with io.open(file_path, mode='r+', encoding='utf-8') as f:
             schema_json = json.load(f)
             schema_json['id'] = file_path_template.format(
                 package=self.path,
