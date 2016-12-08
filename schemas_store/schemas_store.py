@@ -138,7 +138,8 @@ class SchemaStore(object):
         # import pdb; pdb.set_trace()
         for elem_name in os.listdir(path):
             if elem_name.endswith('.json'):
-                with open(os.path.join(path, elem_name)) as f:
+                with io.open(os.path.join(path, elem_name),
+                             encoding='utf-8') as f:
                     schema_json = json.load(f)
                     reg_group = VERSION_RE.search(elem_name).groupdict()
                     tree.versions[reg_group['version']] = Draft4Validator(
@@ -189,8 +190,6 @@ class SchemaStore(object):
                 schema=schema_json['id'].split('schemas')[-1])
             f.seek(0)
             f.truncate()
-            f.write(unicode(json.dumps(schema_json,
-                                       indent=4,
-                                       separators=(',', ': '),
-                                       ensure_ascii=False)))
+            f.write(json.dumps(schema_json, indent=4,
+                               separators=(',', ': '), ensure_ascii=False))
 
