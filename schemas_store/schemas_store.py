@@ -21,7 +21,8 @@ class SchemaStore(object):
     root = None
     error_massage_cannot_find = "Can't find schema by version {version}"
     # list of exceptions which you need handel
-    _exceptions = (NotFoundSchema, ValidationError)
+    import_exception = (NotFoundSchema, )
+    validation_exception = (ValidationError, )
 
     def __init__(self, path):
         """ Init path and update schema(IO operation) """
