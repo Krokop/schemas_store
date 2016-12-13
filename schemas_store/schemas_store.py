@@ -50,8 +50,12 @@ class SchemaStore(object):
         :param version: str example "001"
         :return: namedtuple with code, version, schema
         """
-
-        return self._find_child(code=code, version=version, branch=self.root)
+        result = self._find_child(code=code, version=version, branch=self.root)
+        if not result:
+            raise NotFoundSchema(
+                self.error_massage_cannot_find.format(version=version)
+            )
+        return result
 
     def _find_child(self, branch, code, version):
         """
@@ -61,11 +65,11 @@ class SchemaStore(object):
         :param version: string
         :return:
         """
+        if branch.index:
+            check_code = code[len(branch.index):]
+        else:
+            check_code = code
         for child in branch.children:
-            if branch.index:
-                check_code = code[len(branch.index):]
-            else:
-                check_code = code
             if check_code.startswith(child.index):
                 result = self._get_schema(
                     code=code[len(branch.index):] if branch.index else code,
@@ -81,10 +85,7 @@ class SchemaStore(object):
                         return self._check_version_in_branch(version, branch)
                 else:
                     return result
-            else:
-                raise NotFoundSchema(
-                    self.error_massage_cannot_find.format(version=version)
-                )
+        return None
 
     def _get_schema(self, code, branch, version='latest',):
         """
@@ -153,7 +154,7 @@ class SchemaStore(object):
 
     def _go_by_schema(self, path, handler_file, handler_path):
         """
-        Go by direcotory and call handler_file and find json and
+        Go by directory and call handler_file and find json and
         call handler path when find another directory
         :param path: os.path
         :param handler_file: function which call when find file
@@ -192,4 +193,3 @@ class SchemaStore(object):
             f.truncate()
             f.write(json.dumps(schema_json, indent=4,
                                separators=(',', ': '), ensure_ascii=False))
-
