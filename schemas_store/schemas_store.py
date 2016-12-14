@@ -140,7 +140,6 @@ class SchemaStore(object):
         :param tree: _tree.Tree
         :param path: os.path
         """
-        # import pdb; pdb.set_trace()
         for elem_name in os.listdir(path):
             if elem_name.endswith('.json'):
                 with io.open(os.path.join(path, elem_name),
