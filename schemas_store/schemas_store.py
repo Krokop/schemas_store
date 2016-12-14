@@ -20,7 +20,7 @@ class SchemaStore(object):
     schema_tuple = namedtuple('schema', ['code', 'version', 'schema'])
     root = None
     error_massage_cannot_find = "Can't find schema by version {version}"
-    # list of exceptions which you need handel
+
     import_exception = (NotFoundSchema, )
     validation_exception = (ValidationError, )
 
