@@ -11,6 +11,7 @@ Contents:
    usage
    contributing
    authorshistory
+   schemas
 
 Indices and tables
 ==================
