@@ -1,3 +1,7 @@
+.. index:: Index
+
+.. _Index:
+
 Welcome to schemas_store's documentation!
 ======================================
 

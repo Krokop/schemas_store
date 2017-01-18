@@ -1,13 +1,15 @@
+
 =======
 Schemas
 =======
 
-All schemas
+All schemas:
 
+.. toctree::
+   :maxdepth: 20
 
-.. raw:: html
-
-    <script src="_static/docson/widget.js"
-        data-schema="../../schemas/04/1/schema_001.json">
-    </script>
+   schemas/04/04
+   schemas/04/1/041
+   schemas/04/1/2/0412
+   schemas/04/1/2/2/04122
 

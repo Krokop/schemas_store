@@ -69,6 +69,7 @@ coverage: ## check code coverage quickly with the default Python
 		$(BROWSER) htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
+	python docs.py
 	rm -f docs/schemas_store.rst
 	rm -f docs/modules.rst
 	sphinx-apidoc -o docs/ schemas_store
