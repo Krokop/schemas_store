@@ -16,6 +16,10 @@ Create tree for json schema in docs
 """
 
 main_schema_template = """
+.. index:: Schemas
+
+.. _Schemas:
+
 =======
 Schemas
 =======
@@ -35,7 +39,7 @@ schemas_rst_template = """
 Schema {schema_number}
 ======================
 
-Main page :ref:`index`
+Main page :ref:`schemas`
 
 
 {schemas}

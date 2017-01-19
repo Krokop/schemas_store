@@ -1,4 +1,8 @@
 
+.. index:: Schemas
+
+.. _Schemas:
+
 =======
 Schemas
 =======

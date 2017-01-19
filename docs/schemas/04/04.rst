@@ -4,7 +4,7 @@
 Schema 04
 ======================
 
-Main page :ref:`index`
+Main page :ref:`schemas`
 
 
 
