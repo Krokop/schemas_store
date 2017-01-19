@@ -50,7 +50,7 @@ version {version}
 
 .. raw:: html
 
-    <script src="/schemas_store/docs/_build/html/_static/docson/widget.js"
+    <script src="../{static_path}_static/docson/widget.js"
         data-schema="../../schemas/{schema_path}/{file}">
     </script>
 
@@ -80,7 +80,7 @@ def create_doctree(path):
 
 
 def create_schemas_docs():
-    for path, dirs, files in os.walk('./schemas_store/schemas'):
+    for index, (path, dirs, files) in enumerate(os.walk('./schemas_store/schemas')):
         if not SCHEMA_PATH.search(path):
             continue
         path = SCHEMA_PATH.search(path).groupdict()['path']
@@ -88,6 +88,7 @@ def create_schemas_docs():
         rst = [schema_template.format(
                 file=file,
                 schema_path=path,
+                static_path="../" * index,
                 version=VERSION_RE.search(file).groupdict()['version'])
                for file in files]
         path_for_docs = os.path.join(os.getcwd(), 'docs', 'schemas', path)
