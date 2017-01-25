@@ -14,6 +14,10 @@ VERSION_RE = compile(r'schema_(?P<version>\d+).json')
 INDEX_RE = compile(r'/(?P<index>\d+)$')
 
 
+def get_default_schema():
+    return os.path.join(os.path.dirname(__file__), 'schemas')
+
+
 class SchemaStore(object):
     """  Object that work with schemas """
 
@@ -24,9 +28,9 @@ class SchemaStore(object):
     import_exception = (NotFoundSchema, )
     validation_exception = (ValidationError, )
 
-    def __init__(self, path):
+    def __init__(self, path=None):
         """ Init path and update schema(IO operation) """
-        self.path = path
+        self.path = path if path else get_default_schema()
         self.update_schemas_id(self.path)
 
     def load(self):

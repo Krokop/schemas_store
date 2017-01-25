@@ -1,3 +1,7 @@
+.. index:: Index
+
+.. _Index:
+
 Welcome to schemas_store's documentation!
 ======================================
 
@@ -11,6 +15,7 @@ Contents:
    usage
    contributing
    authorshistory
+   schemas
 
 Indices and tables
 ==================
